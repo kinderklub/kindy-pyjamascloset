@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Almari Baju Tidur | Pyjamas Closet Klub</title>
+  
+  <!-- Google Fonts: Quicksand for cute rounded typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --board-bg: rgba(255, 255, 255, 0.94);
+      --board-border: #FDE68A;
+      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+      --shadow-float: 0 16px 32px -4px rgba(0, 0, 0, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-family);
+      color: #374151;
+      position: fixed;
+      touch-action: none;
+      background-color: #FFF7ED;
+    }
+
+    @media (orientation: portrait) {
+      body {
+        background: url('https://imglink.cc/cdn/hbAdO1TbcS.jpeg') center center / cover no-repeat fixed;
+      }
+    }
+
+    @media (orientation: landscape) {
+      body {
+        background: url('https://imglink.cc/cdn/tjmfZovzyV.jpeg') center center / cover no-repeat fixed;
+      }
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.1) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #app-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    /* HEADER */
+    header.game-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      z-index: 40;
+      flex-shrink: 0;
+      gap: 6px;
+    }
+
+    .header-left-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 2px solid #FDE68A;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .header-nav-btn:active {
+      transform: scale(0.92);
+    }
+
+    .header-title-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 2px solid #FDE68A;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      min-width: 140px;
+    }
+
+    .header-title-badge h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #9D174D;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .header-badges-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .header-subtitle-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #D97706;
+      background: #FEF3C7;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid #FDE68A;
+    }
+
+    .header-round-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #E11D48;
+      background: #FFE4E6;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid #FECDD3;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lang-pill {
+      font-family: var(--font-family);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #4F46E5;
+      border: 2px solid #C7D2FE;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      outline: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .lang-pill:active {
+      transform: scale(0.95);
+    }
+
+    /* SCREENS */
+    .screen {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      bottom: 22px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      z-index: 20;
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+
+    .screen.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    /* MAIN MENU CARD */
+    .menu-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 24px 20px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: var(--shadow-float);
+      border: 4px solid #FBCFE8;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .mascot-banner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mascot-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #FFFBEB;
+      border: 3px solid #FDE68A;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .mascot-avatar img {
+      width: 92%;
+      height: 92%;
+      object-fit: contain;
+    }
+
+    .diff-group {
+      display: flex;
+      gap: 6px;
+      background: #F3F4F6;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #E5E7EB;
+    }
+
+    .diff-btn {
+      flex: 1;
+      padding: 8px 4px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family);
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #6B7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .diff-btn.active {
+      background: #F43F5E;
+      color: white;
+      box-shadow: 0 3px 8px rgba(244, 63, 94, 0.35);
+    }
+
+    .btn-big {
+      font-family: var(--font-family);
+      font-weight: 800;
+      font-size: 1.15rem;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 3px solid #BE123C;
+      background: linear-gradient(180deg, #FB7185 0%, #F43F5E 50%, #E11D48 100%);
+      color: white;
+      box-shadow: 0 5px 0 #9F1239, 0 10px 18px rgba(244, 63, 94, 0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+
+    .btn-big:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #9F1239;
+    }
+
+    /* GAMEPLAY ARENA */
+    #screen-game {
+      padding: 4px 8px 6px;
+      justify-content: space-between;
+    }
+
+    .wardrobe-main-board {
+      width: 100%;
+      max-width: 680px;
+      flex: 1;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-radius: 26px;
+      border: 3.5px solid var(--board-border);
+      box-shadow: var(--shadow-float);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 6px;
+      padding: 6px 10px 8px;
+    }
+
+    .board-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+      flex-shrink: 0;
+    }
+
+    .board-header-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #92400E;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* POP & CANDY FEEDBACK BUBBLE */
+    .feedback-bubble {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #9D174D;
+      background: #FDF2F8;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1.5px solid #F472B6;
+      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .feedback-bubble.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .feedback-bubble.notice {
+      color: #92400E;
+      background: #FEF3C7;
+      border-color: #FDE68A;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    }
+
+    /* WARDROBE RAILS: LARGE & PROPORTIONAL */
+    .wardrobe-rails-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      gap: 4px;
+      overflow-y: auto;
+      padding: 2px 0;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .clothes-rail {
+      position: relative;
+      width: 100%;
+      min-height: 165px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 4px;
+    }
+
+    /* AI ROD ASSET */
+    .rail-rod-art {
+      position: absolute;
+      top: 32px;
+      left: 1%;
+      width: 98%;
+      height: 24px;
+      object-fit: fill;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.22));
+    }
+
+    /* PAIR GROUP */
+    .pair-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 4vw, 28px);
+      position: relative;
+      z-index: 2;
+      padding: 4px 10px;
+      border-radius: 24px;
+      transition: all 0.25s ease;
+    }
+
+    .pair-group.matched {
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.2) 0%, rgba(245, 158, 11, 0.04) 80%);
+      box-shadow: 0 4px 18px rgba(244, 63, 94, 0.25);
+      border-radius: 26px;
+    }
+
+    /* HANGING SPOT */
+    .hanging-spot {
+      width: clamp(128px, 36vw, 175px);
+      height: clamp(155px, 25vh, 195px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      border-radius: 22px;
+      transition: transform 0.18s ease;
+      touch-action: none;
+      cursor: pointer;
+    }
+
+    .hanging-spot.hover-target {
+      transform: scale(1.06);
+    }
+
+    .hanging-spot.hover-target .hanger-art-img {
+      filter: drop-shadow(0 0 12px #F59E0B) brightness(1.2);
+    }
+
+    /* AI HANGER ASSET */
+    .hanger-art-img {
+      width: clamp(84px, 24vw, 115px);
+      height: auto;
+      max-height: 54px;
+      position: absolute;
+      top: 14px;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 3;
+      filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.22));
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .hanging-spot.empty::after {
+      content: "";
+      position: absolute;
+      bottom: 12px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .spot-clothing-host {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 36px;
+      z-index: 4;
+    }
+
+    /* HIGH DENSITY OVERRIDES */
+    .clothes-rail.dense .hanging-spot {
+      width: clamp(74px, 21vw, 100px);
+      height: 125px;
+    }
+    .clothes-rail.dense .hanger-art-img {
+      width: clamp(52px, 15vw, 70px);
+      top: 10px;
+    }
+    .clothes-rail.dense .spot-clothing-host {
+      padding-top: 24px;
+    }
+    .clothes-rail.dense .rail-rod-art {
+      top: 24px;
+    }
+
+    /* MIXED SHELF BOARD (BOTTOM TRAY: EXACTLY 6 ITEMS) */
+    .mixed-shelf-board {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 22px;
+      border: 3px solid #FDE68A;
+      box-shadow: var(--shadow-soft);
+      padding: 6px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+      z-index: 25;
+    }
+
+    .shelf-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    .shelf-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #9D174D;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shelf-items-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 6px 8px;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+      min-height: 112px;
+    }
+
+    /* GARMENT ITEMS */
+    .garment-item {
+      position: relative;
+      flex-shrink: 0;
+      width: clamp(92px, 24vw, 115px);
+      height: clamp(98px, 25vw, 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.15));
+    }
+
+    .garment-item:active {
+      cursor: grabbing;
+    }
+
+    .garment-item.selected {
+      transform: translateY(-6px) scale(1.08);
+      filter: drop-shadow(0 12px 18px rgba(244, 63, 94, 0.4));
+    }
+
+    .garment-item.dragging {
+      opacity: 0.15;
+    }
+
+    .garment-item.locked {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .garment-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .spot-clothing-host .garment-item {
+      width: clamp(118px, 33vw, 155px);
+      height: clamp(118px, 33vw, 155px);
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.2));
+    }
+
+    .clothes-rail.dense .spot-clothing-host .garment-item {
+      width: clamp(74px, 21vw, 95px);
+      height: clamp(74px, 21vw, 95px);
+    }
+
+    /* FLOATING DRAG PROXY */
+    #drag-proxy {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 130px;
+      height: 130px;
+      pointer-events: none;
+      z-index: 999;
+      display: none;
+      transform: translate(-50%, -50%) scale(1.12);
+      filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.35));
+    }
+
+    #drag-proxy img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .bottom-bar {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      justify-content: center;
+      padding: 2px 0;
+      flex-shrink: 0;
+    }
+
+    .btn-back-bottom {
+      font-family: var(--font-family);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 6px 20px;
+      border-radius: 999px;
+      border: 2px solid #FDE68A;
+      background: rgba(255, 255, 255, 0.95);
+      color: #92400E;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-back-bottom:active {
+      transform: scale(0.95);
+    }
+
+    /* MODAL OVERLAYS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #FFFFFF;
+      border-radius: 34px;
+      padding: 24px 20px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-float);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: popIn 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* POP & CANDY WIN CARD STYLING */
+    .card-candy-pop {
+      background: linear-gradient(180deg, #FFFDF8 0%, #FFF5F7 100%);
+      border: 4px solid #FBCFE8;
+      box-shadow: 0 20px 40px rgba(244, 63, 94, 0.25), 0 0 0 6px #FEF3C7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-candy-pop::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(253, 224, 71, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .trophy-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .trophy-glow-halo {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.8) 0%, rgba(251, 146, 60, 0.3) 50%, transparent 75%);
+      filter: blur(8px);
+      animation: pulseGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      100% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .trophy-ai-image {
+      position: relative;
+      width: 115px;
+      height: 115px;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 16px rgba(217, 119, 6, 0.35));
+      animation: trophyBob 2s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+
+    @keyframes trophyBob {
+      0% { transform: translateY(0px) rotate(-1.5deg); }
+      100% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+
+    /* POP & CANDY WIN BUTTON */
+    .btn-candy-next {
+      font-family: var(--font-family);
+      font-weight: 800;
+      font-size: 1.15rem;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 3px solid #BE123C;
+      background: linear-gradient(180deg, #FB7185 0%, #F43F5E 50%, #E11D48 100%);
+      color: white;
+      box-shadow: 0 5px 0 #9F1239, 0 12px 22px rgba(244, 63, 94, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      outline: none;
+      width: 100%;
+    }
+
+    .btn-candy-next:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #9F1239;
+    }
+
+    /* SCOREBOARD STATS */
+    .scoreboard-stats-box {
+      width: 100%;
+      background: #FDF4FF;
+      border: 2px solid #F0ABFC;
+      border-radius: 20px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .stat-row span:first-child {
+      color: #701A75;
+    }
+
+    .stat-row span:last-child {
+      color: #9D174D;
+      background: #FCE7F3;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 150;
+    }
+
+    footer.game-footer {
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      pointer-events: none;
+      z-index: 30;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-container">
+
+    <!-- Top Navigation Header -->
+    <header class="game-header" role="banner">
+      <div class="header-left-actions">
+        <!-- Cute 3D Chibi House SVG for Home -->
+        <button id="btn-header-home" class="header-nav-btn" type="button" aria-label="Laman Utama / Home">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <linearGradient id="roofGrad" x1="32" y1="6" x2="32" y2="30" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FF6B8B"/>
+                <stop offset="50%" stop-color="#F43F5E"/>
+                <stop offset="100%" stop-color="#BE123C"/>
+              </linearGradient>
+              <linearGradient id="wallGrad" x1="32" y1="28" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFFBEB"/>
+                <stop offset="100%" stop-color="#FDE68A"/>
+              </linearGradient>
+              <linearGradient id="doorGrad" x1="32" y1="40" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#38BDF8"/>
+                <stop offset="100%" stop-color="#0284C7"/>
+              </linearGradient>
+              <filter id="chibiGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.2"/>
+              </filter>
+            </defs>
+            <rect x="42" y="14" width="7" height="12" rx="2" fill="#FB923C" stroke="#C2410C" stroke-width="2"/>
+            <circle cx="45.5" cy="10" r="3.5" fill="#FFFFFF" fill-opacity="0.8"/>
+            <rect x="14" y="27" width="36" height="30" rx="8" fill="url(#wallGrad)" stroke="#D97706" stroke-width="2.5" filter="url(#chibiGlow)"/>
+            <path d="M7 30C7 30 14 10 32 8C50 10 57 30 57 30C57 30 46 25 32 25C18 25 7 30 7 30Z" fill="url(#roofGrad)" stroke="#9F1239" stroke-width="2.5"/>
+            <path d="M16 23C20 16 28 13 36 13C39 13 42 14 44 15" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.7"/>
+            <circle cx="32" cy="20" r="4.5" fill="#FEF08A" stroke="#CA8A04" stroke-width="1.5"/>
+            <rect x="25" y="38" width="14" height="19" rx="7" fill="url(#doorGrad)" stroke="#0369A1" stroke-width="2"/>
+            <circle cx="35" cy="48" r="1.5" fill="#FEF08A"/>
+            <ellipse cx="14" cy="56" rx="5" ry="3" fill="#4ADE80"/>
+            <ellipse cx="50" cy="56" rx="5" ry="3" fill="#4ADE80"/>
+          </svg>
+        </button>
+
+        <!-- Cute 3D Chibi Back Arrow -->
+        <button id="btn-header-back" class="header-nav-btn" type="button" aria-label="Kembali / Back">
+          <svg width="26" height="26" viewBox="0 0 48 48" fill="none">
+            <defs>
+              <linearGradient id="backBtnGrad" x1="12" y1="12" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FBBF24"/>
+                <stop offset="100%" stop-color="#D97706"/>
+              </linearGradient>
+            </defs>
+            <circle cx="24" cy="24" r="20" fill="url(#backBtnGrad)"/>
+            <circle cx="24" cy="24" r="18" fill="#FFFBEB"/>
+            <path d="M28 15L17 24L28 33" stroke="#B45309" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M28 17L19 24L28 31" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="header-title-badge">
+        <h1 id="txt-app-title">Almari Baju Tidur</h1>
+        <div class="header-badges-row">
+          <div class="header-subtitle-pill" id="txt-progress-badge">Pasangan 0 / 2</div>
+          <div class="header-round-pill" id="txt-round-badge">Pusingan 1 / 10</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Language Switcher BM | English -->
+        <button id="btn-lang-toggle" class="lang-pill" type="button" aria-label="Tukar Bahasa / Switch Language">
+          BM | English
+        </button>
+
+        <!-- Sound Toggle -->
+        <button id="btn-sound-toggle" class="header-nav-btn" type="button" aria-label="Bunyi Audio / Sound FX">
+          <svg id="svg-sound-on" width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <polygon points="14 7 8 12 3 12 3 20 8 20 14 25 14 7" fill="#F59E0B" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M20 10C22.5 12 24 14 24 16C24 18 22.5 20 20 22" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M24 6C27.5 9 29 12.5 29 16C29 19.5 27.5 23 24 26" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <svg id="svg-sound-off" style="display:none;" width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <polygon points="14 7 8 12 3 12 3 20 8 20 14 25 14 7" fill="#9CA3AF" stroke="#6B7280" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="4" y1="4" x2="28" y2="28" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: MAIN MENU -->
+    <main id="screen-menu" class="screen active" role="main">
+      <div class="menu-card">
+        <div class="mascot-banner">
+          <div class="mascot-avatar">
+            <img src="https://imglink.cc/cdn/ItfjcDFFN3.png" alt="Mascot Girl" onerror="this.style.display='none'">
+          </div>
+          <div class="mascot-avatar">
+            <img src="https://imglink.cc/cdn/8Rm9OidADE.png" alt="Mascot Boy" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div>
+          <h2 id="menu-title" style="color: #9D174D; font-size: 1.6rem; font-weight: 800;">Almari Baju Tidur</h2>
+          <p id="menu-sub" style="color: #6B7280; font-weight: 600; font-size: 0.95rem; margin-top: 2px;">
+            Gantung & padankan baju tidur kegemaran!
+          </p>
+        </div>
+
+        <!-- Difficulty Selection -->
+        <div style="text-align: left; margin-top: 4px;">
+          <span id="lbl-diff" style="font-size: 0.85rem; font-weight: 800; color: #4B5563;">Tahap Permainan:</span>
+          <div class="diff-group" style="margin-top: 4px;">
+            <button class="diff-btn active" data-diff="easy" id="diff-easy" type="button">Mudah (2 Pasang)</button>
+            <button class="diff-btn" data-diff="medium" id="diff-medium" type="button">Sederhana (3 Pasang)</button>
+            <button class="diff-btn" data-diff="hard" id="diff-hard" type="button">Cabaran (4 Pasang)</button>
+          </div>
+        </div>
+
+        <!-- Play Button -->
+        <button id="btn-start" class="btn-big" type="button">
+          <!-- Cute 3D Chibi Play Gem SVG -->
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <defs>
+              <linearGradient id="playGemGrad" x1="8" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="35%" stop-color="#FDE047"/>
+                <stop offset="100%" stop-color="#EAB308"/>
+              </linearGradient>
+            </defs>
+            <path d="M8 5.5L26 16L8 26.5V5.5Z" fill="url(#playGemGrad)" stroke="#A16207" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M10 9L21 16L10 23V9Z" fill="#FEF08A" fill-opacity="0.7"/>
+          </svg>
+          <span id="txt-play-btn">Mula Main (10 Pusingan)</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- SCREEN 2: GAMEPLAY ARENA -->
+    <section id="screen-game" class="screen" aria-label="Permainan Almari">
+      
+      <!-- Central Wardrobe Board -->
+      <div class="wardrobe-main-board" id="wardrobe-board">
+        <div class="board-header-bar">
+          <div class="board-header-title">
+            <svg width="24" height="24" viewBox="0 0 36 36" fill="none">
+              <defs>
+                <linearGradient id="chibiStarGrad" x1="18" y1="2" x2="18" y2="34" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#FDE047"/>
+                  <stop offset="40%" stop-color="#F59E0B"/>
+                  <stop offset="100%" stop-color="#D97706"/>
+                </linearGradient>
+              </defs>
+              <path d="M18 3L22.2 12.8L32.8 14.5L25.1 22.1L26.9 32.7L18 27.8L9.1 32.7L10.9 22.1L3.2 14.5L13.8 12.8L18 3Z" fill="url(#chibiStarGrad)" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/>
+              <ellipse cx="14" cy="14" rx="2.5" ry="3.5" fill="#FFFFFF" fill-opacity="0.8"/>
+              <circle cx="23" cy="12" r="1.5" fill="#FFFFFF" fill-opacity="0.9"/>
+            </svg>
+            <span id="txt-board-heading">Gantung Baju & Seluar</span>
+          </div>
+
+          <div id="live-feedback" class="feedback-bubble">
+            <!-- 3D Heart Star SVG -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FB7185"/>
+            </svg>
+            <span id="txt-live-feedback">Sepadan!</span>
+          </div>
+        </div>
+
+        <!-- Rails Area with AI Rods & Hangers -->
+        <div class="wardrobe-rails-area" id="wardrobe-rails-container"></div>
+      </div>
+
+      <!-- Mixed Pyjamas Shelf (Bottom Tray: Exactly 6 Garments) -->
+      <div class="mixed-shelf-board">
+        <div class="shelf-header">
+          <span class="shelf-title">
+            <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+              <defs>
+                <linearGradient id="tagGrad" x1="16" y1="4" x2="16" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#F472B6"/>
+                  <stop offset="100%" stop-color="#DB2777"/>
+                </linearGradient>
+              </defs>
+              <rect x="4" y="4" width="24" height="24" rx="8" fill="url(#tagGrad)" stroke="#9D174D" stroke-width="2"/>
+              <circle cx="16" cy="11" r="3" fill="#FFF" stroke="#9D174D" stroke-width="1.5"/>
+              <path d="M10 20C12 17 20 17 22 20" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span id="txt-shelf-label">Pakaian Berselerak (6 Item)</span>
+          </span>
+          <span id="txt-shelf-count" style="font-size: 0.78rem; font-weight: 800; color: #9CA3AF;">6 item</span>
+        </div>
+
+        <div class="shelf-items-row" id="shelf-clothes-row"></div>
+      </div>
+
+      <!-- Bottom Back Button -->
+      <div class="bottom-bar">
+        <button id="btn-back-inline" class="btn-back-bottom" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span id="txt-btn-back">Undur</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- MODAL 1: ROUND WIN MODAL (ROUNDS 1 TO 9) WITH AI GOLDEN TROPHY & POP COLOR THEME -->
+    <div id="modal-round-win" class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="modal-card card-candy-pop">
+        <div class="trophy-container">
+          <div class="trophy-glow-halo"></div>
+          <img class="trophy-ai-image" src="https://imglink.cc/cdn/8VmcU57o4G.png" alt="Trofi Emas Kemenangan" onerror="this.style.display='none'">
+        </div>
+
+        <h2 id="txt-round-win-title" style="color: #9D174D; font-size: 1.65rem; font-weight: 800; letter-spacing: -0.3px; text-shadow: 0 2px 4px rgba(251, 113, 133, 0.2);">
+          Syabas, Pandainya!
+        </h2>
+        <p id="txt-round-win-desc" style="color: #B45309; font-weight: 700; font-size: 0.96rem; line-height: 1.35;">
+          Pusingan 1 selesai! Jom teruskan ke pusingan seterusnya.
+        </p>
+
+        <button id="btn-round-next" class="btn-candy-next" type="button">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="txt-round-next-btn">Pusingan Seterusnya</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL 2: GRAND FINAL SCOREBOARD (AFTER ROUND 10) -->
+    <div id="modal-final-scoreboard" class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="modal-card card-candy-pop" style="border-color: #F472B6;">
+        <div class="trophy-container">
+          <div class="trophy-glow-halo"></div>
+          <img class="trophy-ai-image" src="https://imglink.cc/cdn/8VmcU57o4G.png" alt="Trofi Emas Akhir" onerror="this.style.display='none'">
+        </div>
+
+        <h2 id="txt-scoreboard-title" style="color: #9D174D; font-size: 1.65rem; font-weight: 800;">Papan Markah Akhir!</h2>
+        <p id="txt-scoreboard-subtitle" style="color: #6B7280; font-weight: 700; font-size: 0.92rem;">
+          Tahniah! Semua 10 Pusingan Berjaya Ditamatkan!
+        </p>
+
+        <!-- Stats Box -->
+        <div class="scoreboard-stats-box">
+          <div class="stat-row">
+            <span id="lbl-stat-rounds">Pusingan Selesai:</span>
+            <span id="val-stat-rounds">10 / 10</span>
+          </div>
+          <div class="stat-row">
+            <span id="lbl-stat-pairs">Jumlah Pasangan Padan:</span>
+            <span id="val-stat-pairs">20 Pasangan</span>
+          </div>
+          <div class="stat-row">
+            <span id="lbl-stat-grade">Tahap Kemahiran:</span>
+            <span id="val-stat-grade">Genius Cilik (100%)</span>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div style="display:flex; flex-direction:column; gap:8px; width:100%; margin-top:4px;">
+          <button id="btn-scoreboard-replay" class="btn-candy-next" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 4v6h6M23 20v-6h-6"/>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+            </svg>
+            <span id="txt-scoreboard-replay-btn">Main Semula (10 Pusingan)</span>
+          </button>
+
+          <button id="btn-scoreboard-home" class="btn-back-bottom" style="width:100%; justify-content:center; padding:10px 18px;" type="button">
+            <span id="txt-scoreboard-home-btn">Kembali ke Laman Utama</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating drag proxy -->
+    <div id="drag-proxy" aria-hidden="true"></div>
+
+    <!-- Celebration confetti canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <footer class="game-footer">
+      Kinder Klub | All Rights Reserved
+    </footer>
+  </div>
+
+  <script>
+    const ASSETS = {
+      wardrobePortrait: "https://imglink.cc/cdn/hbAdO1TbcS.jpeg",
+      wardrobeLandscape: "https://imglink.cc/cdn/tjmfZovzyV.jpeg",
+      girlMascot: "https://imglink.cc/cdn/ItfjcDFFN3.png",
+      boyMascot: "https://imglink.cc/cdn/8Rm9OidADE.png",
+      hangerUrl: "https://imglink.cc/cdn/-NXMxKzAYx.png",
+      rodUrl: "https://imglink.cc/cdn/DAAVE5Uq33.png",
+      goldenTrophyUrl: "https://imglink.cc/cdn/8VmcU57o4G.png",
+      designs: [
+        { id: "01", name: "Pink Rainbow Stripes", shirtUrl: "https://imglink.cc/cdn/NDIwqip8JQ.png", trousersUrl: "https://imglink.cc/cdn/gzjAtDh2Xw.png" },
+        { id: "02", name: "Blue Star Stripes", shirtUrl: "https://imglink.cc/cdn/dcQRnbyD7h.png", trousersUrl: "https://imglink.cc/cdn/N8wbFMQJo8.png" },
+        { id: "03", name: "Lavender Flower Garden", shirtUrl: "https://imglink.cc/cdn/gS4iuv1Fop.png", trousersUrl: "https://imglink.cc/cdn/lD6eZCKmSa.png" },
+        { id: "04", name: "Sunshine Yellow Daisies", shirtUrl: "https://imglink.cc/cdn/YChyQJnW9n.png", trousersUrl: "https://imglink.cc/cdn/dK9HeI_wqW.png" },
+        { id: "05", name: "Robot Adventure", shirtUrl: "https://imglink.cc/cdn/Ubt5qL_kXq.png", trousersUrl: "https://imglink.cc/cdn/43tlhc4cOy.png" },
+        { id: "06", name: "Moon and Stars", shirtUrl: "https://imglink.cc/cdn/iKl9MN6rav.png", trousersUrl: "https://imglink.cc/cdn/elnrRyQfQU.png" },
+        { id: "07", name: "Peachy Hearts", shirtUrl: "https://imglink.cc/cdn/vwgqFSfX4R.png", trousersUrl: "https://imglink.cc/cdn/a7V2bPypyZ.png" },
+        { id: "08", name: "Mint Fox Friends", shirtUrl: "https://imglink.cc/cdn/IJipXcqrKt.png", trousersUrl: "https://imglink.cc/cdn/jLfyhuln7w.png" },
+        { id: "09", name: "Purple Polka Dots", shirtUrl: "https://imglink.cc/cdn/FSppNAMpA_.png", trousersUrl: "https://imglink.cc/cdn/JxzcGXZJJY.png" },
+        { id: "10", name: "Orange Dinosaur Pals", shirtUrl: "https://imglink.cc/cdn/cj-ZAbBMOX.png", trousersUrl: "https://imglink.cc/cdn/Z3YVEnIg9a.png" },
+        { id: "11", name: "Rainbow Clouds", shirtUrl: "https://imglink.cc/cdn/rDxqNt_E1a.png", trousersUrl: "https://imglink.cc/cdn/22ayxhY1p5.png" },
+        { id: "12", name: "Strawberry Sweetheart", shirtUrl: "https://imglink.cc/cdn/KQ2e9G5kYF.png", trousersUrl: "https://imglink.cc/cdn/8-JGUDEXid.png" },
+        { id: "13", name: "Space Explorer", shirtUrl: "https://imglink.cc/cdn/4_TwsjgP5z.png", trousersUrl: "https://imglink.cc/cdn/N8kClAgYhY.png" },
+        { id: "14", name: "Mint Candy Stripes", shirtUrl: "https://imglink.cc/cdn/izSChwRDJq.png", trousersUrl: "https://imglink.cc/cdn/IX-puvKVhZ.png" },
+        { id: "15", name: "Purple Butterfly Garden", shirtUrl: "https://imglink.cc/cdn/8cl8DH_-hI.png", trousersUrl: "https://imglink.cc/cdn/u5q2ZR1fNh.png" },
+        { id: "16", name: "Coral Heart Stripes", shirtUrl: "https://imglink.cc/cdn/1X-2MosfXW.png", trousersUrl: "https://imglink.cc/cdn/s-nvsNjckU.png" },
+        { id: "17", name: "Sleepy Kittens", shirtUrl: "https://imglink.cc/cdn/pdeWIF51GQ.png", trousersUrl: "https://imglink.cc/cdn/cOP7Op9lR7.png" },
+        { id: "18", name: "Ocean Friends", shirtUrl: "https://imglink.cc/cdn/co_BaCszb-.png", trousersUrl: "https://imglink.cc/cdn/sGil9l8r6Q.png" },
+        { id: "19", name: "Candy Polka-Dot Stripes", shirtUrl: "https://imglink.cc/cdn/wSOD56MULE.png", trousersUrl: "https://imglink.cc/cdn/zWWVBjUNYa.png" },
+        { id: "20", name: "Dreamy Unicorn Stars", shirtUrl: "https://imglink.cc/cdn/RzKEBioRri.png", trousersUrl: "https://imglink.cc/cdn/VyC3vnZ1_X.png" },
+        { id: "21", name: "Rainbow Explosion", shirtUrl: "https://imglink.cc/cdn/6q3K-5heF1.png", trousersUrl: "https://imglink.cc/cdn/nBy33gYRDA.png" },
+        { id: "22", name: "Safari Party", shirtUrl: "https://imglink.cc/cdn/1oHCR3w-Qa.png", trousersUrl: "https://imglink.cc/cdn/rhGu1Gpxj4.png" },
+        { id: "23", name: "Happy Blob Universe", shirtUrl: "https://imglink.cc/cdn/InxWpwcC3N.png", trousersUrl: "https://imglink.cc/cdn/fnRm3etxDF.png" },
+        { id: "24", name: "Doodle Mania", shirtUrl: "https://imglink.cc/cdn/yZUzRavsEm.png", trousersUrl: "https://imglink.cc/cdn/C1QOJwJdlc.png" },
+        { id: "25", name: "Dino Jungle Expedition", shirtUrl: "https://imglink.cc/cdn/iKvZNKtQ2r.png", trousersUrl: "https://imglink.cc/cdn/olB3ATS7Rr.png" },
+        { id: "26", name: "Fruity Pop Picnic", shirtUrl: "https://imglink.cc/cdn/x-AMR-HBGZ.png", trousersUrl: "https://imglink.cc/cdn/dDCIU4zShs.png" },
+        { id: "27", name: "Candy Carnival", shirtUrl: "https://imglink.cc/cdn/U4gTBlYpE3.png", trousersUrl: "https://imglink.cc/cdn/9Hvv5O04Pl.png" },
+        { id: "28", name: "Chocolate Dreamland", shirtUrl: "https://imglink.cc/cdn/Xdgum5WyL3.png", trousersUrl: "https://imglink.cc/cdn/6TshQ1KvpK.png" },
+        { id: "29", name: "Planet Pop Galaxy", shirtUrl: "https://imglink.cc/cdn/tSqFf7Xi_9.png", trousersUrl: "https://imglink.cc/cdn/Yrv8FAkcWT.png" },
+        { id: "30", name: "Underwater Disco", shirtUrl: "https://imglink.cc/cdn/6zn-51PPj5.png", trousersUrl: "https://imglink.cc/cdn/Z2w8mkPFOO.png" },
+        { id: "31", name: "Animal Face Party", shirtUrl: "https://imglink.cc/cdn/_F8zfPCKER.png", trousersUrl: "https://imglink.cc/cdn/92brFf44pA.png" },
+        { id: "32", name: "Groovy Flower Power", shirtUrl: "https://imglink.cc/cdn/IalAIZlRZN.png", trousersUrl: "https://imglink.cc/cdn/LBvITaUZip.png" },
+        { id: "33", name: "Turbo Racer", shirtUrl: "https://imglink.cc/cdn/ytgJHUlPBJ.png", trousersUrl: "https://imglink.cc/cdn/EyNLxSUfvl.png" },
+        { id: "34", name: "Shape Shifter", shirtUrl: "https://imglink.cc/cdn/r2MlMRH5mI.png", trousersUrl: "https://imglink.cc/cdn/Fmr4D3fDMd.png" },
+        { id: "35", name: "Little Bakery Club", shirtUrl: "https://imglink.cc/cdn/jhKdqQWMPB.png", trousersUrl: "https://imglink.cc/cdn/FIf8ljLZXy.png" },
+        { id: "36", name: "Tropical Jungle Jam", shirtUrl: "https://imglink.cc/cdn/RtwoaRsZqk.png", trousersUrl: "https://imglink.cc/cdn/1ldP8hZ-cz.png" },
+        { id: "37", name: "Happy Weather Club", shirtUrl: "https://imglink.cc/cdn/YQsikX8iDY.png", trousersUrl: "https://imglink.cc/cdn/5mbEcO9bxi.png" },
+        { id: "38", name: "Tiny Garden World", shirtUrl: "https://imglink.cc/cdn/FwHsl1NZ_Z.png", trousersUrl: "https://imglink.cc/cdn/8U8BUTCW8t.png" },
+        { id: "39", name: "Ice Cream Pop", shirtUrl: "https://imglink.cc/cdn/C_VjPA-NLX.png", trousersUrl: "https://imglink.cc/cdn/io4LgPdsZM.png" },
+        { id: "40", name: "Monster Mash", shirtUrl: "https://imglink.cc/cdn/RpkLjGBc5W.png", trousersUrl: "https://imglink.cc/cdn/vmKoi_xdop.png" }
+      ]
+    };
+
+    const I18N = {
+      bm: {
+        appTitle: "Almari Baju Tidur",
+        menuTitle: "Almari Baju Tidur",
+        menuSub: "Gantung & padankan baju tidur kegemaran!",
+        lblDiff: "Tahap Permainan:",
+        diffEasy: "Mudah (2 Pasang)",
+        diffMedium: "Sederhana (3 Pasang)",
+        diffHard: "Cabaran (4 Pasang)",
+        playBtn: "Mula Main (10 Pusingan)",
+        boardHeading: "Gantung Baju & Seluar",
+        shelfLabel: "Pakaian Berselerak (6 Item)",
+        itemCount: "{count} item",
+        roundLabel: "Pusingan {cur} / {tot}",
+        pairProgress: "Pasangan {cur} / {tot}",
+        btnBack: "Undur",
+        feedbackMatch: "Bagus! Pasangan sepadan!",
+        feedbackMismatch: "Corak belum sama, cuba lagi!",
+        roundWinTitle: "Syabas, Pandainya!",
+        roundWinDesc: "Pusingan {cur} selesai! Jom teruskan ke pusingan seterusnya.",
+        roundNextBtn: "Pusingan Seterusnya",
+        scoreTitle: "Papan Markah Akhir!",
+        scoreSubtitle: "Tahniah! Semua 10 Pusingan Berjaya Ditamatkan!",
+        statRounds: "Pusingan Selesai:",
+        statPairs: "Jumlah Pasangan Padan:",
+        statGrade: "Tahap Kemahiran:",
+        statGradeVal: "Genius Cilik (100%)",
+        scoreReplayBtn: "Main Semula (10 Pusingan)",
+        scoreHomeBtn: "Kembali ke Laman Utama"
+      },
+      en: {
+        appTitle: "Pyjamas Closet",
+        menuTitle: "Pyjamas Closet",
+        menuSub: "Hang & match your favourite pyjamas sets!",
+        lblDiff: "Game Level:",
+        diffEasy: "Easy (2 Pairs)",
+        diffMedium: "Medium (3 Pairs)",
+        diffHard: "Challenge (4 Pairs)",
+        playBtn: "Play Now (10 Rounds)",
+        boardHeading: "Hang Shirts & Trousers",
+        shelfLabel: "Mixed Pyjamas (6 Items)",
+        itemCount: "{count} items",
+        roundLabel: "Round {cur} / {tot}",
+        pairProgress: "Pairs {cur} / {tot}",
+        btnBack: "Back",
+        feedbackMatch: "Great! A matching pair!",
+        feedbackMismatch: "Patterns do not match, try again!",
+        roundWinTitle: "Hooray, Well Done!",
+        roundWinDesc: "Round {cur} complete! Let's continue to the next round.",
+        roundNextBtn: "Next Round",
+        scoreTitle: "Final Scoreboard!",
+        scoreSubtitle: "Congratulations! All 10 Rounds Successfully Completed!",
+        statRounds: "Rounds Completed:",
+        statPairs: "Total Matching Pairs:",
+        statGrade: "Skill Level:",
+        statGradeVal: "Little Genius (100%)",
+        scoreReplayBtn: "Play Again (10 Rounds)",
+        scoreHomeBtn: "Return to Home"
+      }
+    };
+
+    let gameState = {
+      lang: "bm",
+      difficulty: "easy",
+      soundEnabled: true,
+      currentRoundNumber: 1,
+      totalRounds: 10,
+      totalPairsCompleted: 0,
+      activeRound: null,
+      selectedGarment: null
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem("PYJAMAS_CLOSET_V5");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.lang) gameState.lang = parsed.lang;
+          if (parsed.difficulty) gameState.difficulty = parsed.difficulty;
+          if (typeof parsed.soundEnabled === "boolean") gameState.soundEnabled = parsed.soundEnabled;
+        }
+      } catch (e) {}
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem("PYJAMAS_CLOSET_V5", JSON.stringify({
+          lang: gameState.lang,
+          difficulty: gameState.difficulty,
+          soundEnabled: gameState.soundEnabled
+        }));
+      } catch (e) {}
+    }
+
+    let audioCtx = null;
+    function playTone(type) {
+      if (!gameState.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          const AudioClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioClass) audioCtx = new AudioClass();
+        }
+        if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === "pop") {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === "match") {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = "triangle";
+            o.frequency.value = freq;
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            const t = now + idx * 0.07;
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.24, t + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.01, t + 0.32);
+            o.start(t);
+            o.stop(t + 0.32);
+          });
+        } else if (type === "mismatch") {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.linearRampToValueAtTime(220, now + 0.18);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+          osc.start(now);
+          osc.stop(now + 0.18);
+        } else if (type === "victory") {
+          [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((freq, idx) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = "triangle";
+            o.frequency.value = freq;
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            const t = now + idx * 0.08;
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.28, t + 0.03);
+            g.gain.exponentialRampToValueAtTime(0.01, t + 0.38);
+            o.start(t);
+            o.stop(t + 0.38);
+          });
+        }
+      } catch (e) {}
+    }
+
+    function safeSetText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function renderLocalization() {
+      const t = I18N[gameState.lang] || I18N.bm;
+      safeSetText("txt-app-title", t.appTitle);
+      safeSetText("menu-title", t.menuTitle);
+      safeSetText("menu-sub", t.menuSub);
+      safeSetText("lbl-diff", t.lblDiff);
+      safeSetText("diff-easy", t.diffEasy);
+      safeSetText("diff-medium", t.diffMedium);
+      safeSetText("diff-hard", t.diffHard);
+      safeSetText("txt-play-btn", t.playBtn);
+      safeSetText("txt-board-heading", t.boardHeading);
+      safeSetText("txt-shelf-label", t.shelfLabel);
+      safeSetText("txt-btn-back", t.btnBack);
+
+      const roundText = t.roundLabel.replace("{cur}", gameState.currentRoundNumber).replace("{tot}", gameState.totalRounds);
+      safeSetText("txt-round-badge", roundText);
+
+      safeSetText("txt-round-win-title", t.roundWinTitle);
+      safeSetText("txt-round-win-desc", t.roundWinDesc.replace("{cur}", gameState.currentRoundNumber));
+      safeSetText("txt-round-next-btn", t.roundNextBtn);
+
+      safeSetText("txt-scoreboard-title", t.scoreTitle);
+      safeSetText("txt-scoreboard-subtitle", t.scoreSubtitle);
+      safeSetText("lbl-stat-rounds", t.statRounds);
+      safeSetText("lbl-stat-pairs", t.statPairs);
+      safeSetText("lbl-stat-grade", t.statGrade);
+      safeSetText("val-stat-grade", t.statGradeVal);
+      safeSetText("txt-scoreboard-replay-btn", t.scoreReplayBtn);
+      safeSetText("txt-scoreboard-home-btn", t.scoreHomeBtn);
+
+      if (gameState.activeRound) {
+        let matched = gameState.activeRound.pairs.filter(p => p.isMatched).length;
+        safeSetText("txt-progress-badge", t.pairProgress.replace("{cur}", matched).replace("{tot}", gameState.activeRound.pairCount));
+      } else {
+        let count = gameState.difficulty === "medium" ? 3 : (gameState.difficulty === "hard" ? 4 : 2);
+        safeSetText("txt-progress-badge", t.pairProgress.replace("{cur}", 0).replace("{tot}", count));
+      }
+    }
+
+    function switchScreen(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      const target = document.getElementById(id);
+      if (target) target.classList.add("active");
+    }
+
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function createRound(difficulty) {
+      let targetPairs = 2;
+      if (difficulty === "medium") targetPairs = 3;
+      if (difficulty === "hard") targetPairs = 4;
+
+      const shuffledAll = shuffle(ASSETS.designs);
+      const matchedDesigns = shuffledAll.slice(0, targetPairs);
+      const distractorPool = shuffledAll.slice(targetPairs, targetPairs + 2);
+
+      const garments = [];
+
+      matchedDesigns.forEach(d => {
+        garments.push({
+          instanceId: `shirt_${d.id}_${Math.random().toString(36).substr(2, 6)}`,
+          designId: d.id,
+          type: "shirt",
+          name: d.name,
+          url: d.shirtUrl,
+          placedPairIndex: null,
+          placedSlot: null,
+          isDistractor: false
+        });
+        garments.push({
+          instanceId: `trouser_${d.id}_${Math.random().toString(36).substr(2, 6)}`,
+          designId: d.id,
+          type: "trousers",
+          name: d.name,
+          url: d.trousersUrl,
+          placedPairIndex: null,
+          placedSlot: null,
+          isDistractor: false
+        });
+      });
+
+      if (distractorPool.length >= 2) {
+        garments.push({
+          instanceId: `dist_shirt_${distractorPool[0].id}_${Math.random().toString(36).substr(2, 6)}`,
+          designId: distractorPool[0].id,
+          type: "shirt",
+          name: distractorPool[0].name,
+          url: distractorPool[0].shirtUrl,
+          placedPairIndex: null,
+          placedSlot: null,
+          isDistractor: true
+        });
+        garments.push({
+          instanceId: `dist_trouser_${distractorPool[1].id}_${Math.random().toString(36).substr(2, 6)}`,
+          designId: distractorPool[1].id,
+          type: "trousers",
+          name: distractorPool[1].name,
+          url: distractorPool[1].trousersUrl,
+          placedPairIndex: null,
+          placedSlot: null,
+          isDistractor: true
+        });
+      }
+
+      const mixedShelf = shuffle(garments);
+
+      const pairs = [];
+      for (let i = 0; i < targetPairs; i++) {
+        pairs.push({
+          pairIndex: i,
+          shirt: null,
+          trousers: null,
+          isMatched: false
+        });
+      }
+
+      return {
+        difficulty,
+        pairCount: targetPairs,
+        pairs,
+        garments: mixedShelf,
+        isFinished: false
+      };
+    }
+
+    function renderBoard() {
+      const round = gameState.activeRound;
+      if (!round) return;
+
+      const t = I18N[gameState.lang] || I18N.bm;
+      const railsContainer = document.getElementById("wardrobe-rails-container");
+      const shelfRow = document.getElementById("shelf-clothes-row");
+      const shelfCount = document.getElementById("txt-shelf-count");
+      const progressBadge = document.getElementById("txt-progress-badge");
+
+      if (railsContainer) railsContainer.innerHTML = "";
+      if (shelfRow) shelfRow.innerHTML = "";
+
+      let matchedPairs = 0;
+
+      const pairsPerRail = round.pairCount <= 3 ? 1 : 2;
+      const totalRails = Math.ceil(round.pairCount / pairsPerRail);
+
+      for (let r = 0; r < totalRails; r++) {
+        const railEl = document.createElement("div");
+        railEl.className = `clothes-rail ${pairsPerRail > 1 ? "dense" : ""}`;
+
+        const rodImg = document.createElement("img");
+        rodImg.className = "rail-rod-art";
+        rodImg.src = ASSETS.rodUrl;
+        rodImg.alt = "Hanging Rod";
+        railEl.appendChild(rodImg);
+
+        const startIdx = r * pairsPerRail;
+        const endIdx = Math.min(startIdx + pairsPerRail, round.pairCount);
+
+        for (let pIdx = startIdx; pIdx < endIdx; pIdx++) {
+          const pair = round.pairs[pIdx];
+          if (pair.isMatched) matchedPairs++;
+
+          const pairGroupEl = document.createElement("div");
+          pairGroupEl.className = `pair-group ${pair.isMatched ? "matched" : ""}`;
+          pairGroupEl.dataset.pairIndex = pIdx;
+
+          const shirtSpot = createHangerSpotElement(pair, "shirt");
+          const trouserSpot = createHangerSpotElement(pair, "trousers");
+
+          pairGroupEl.appendChild(shirtSpot);
+          pairGroupEl.appendChild(trouserSpot);
+          railEl.appendChild(pairGroupEl);
+        }
+
+        if (railsContainer) railsContainer.appendChild(railEl);
+      }
+
+      let unplacedCount = 0;
+      round.garments.forEach(g => {
+        if (g.placedPairIndex === null) {
+          unplacedCount++;
+          const el = createGarmentNode(g, false);
+          if (shelfRow) shelfRow.appendChild(el);
+        }
+      });
+
+      if (shelfCount) shelfCount.textContent = t.itemCount.replace("{count}", unplacedCount);
+      if (progressBadge) progressBadge.textContent = t.pairProgress.replace("{cur}", matchedPairs).replace("{tot}", round.pairCount);
+    }
+
+    function createHangerSpotElement(pair, slotType) {
+      const spot = document.createElement("div");
+      const garment = slotType === "shirt" ? pair.shirt : pair.trousers;
+      const isOccupied = !!garment;
+
+      spot.className = `hanging-spot ${isOccupied ? "occupied" : "empty"}`;
+      spot.dataset.pairIndex = pair.pairIndex;
+      spot.dataset.slotType = slotType;
+
+      spot.innerHTML = `
+        <img class="hanger-art-img" src="${ASSETS.hangerUrl}" alt="Hanger">
+        <div class="spot-clothing-host" id="host-${pair.pairIndex}-${slotType}"></div>
+      `;
+
+      if (garment) {
+        const host = spot.querySelector(".spot-clothing-host");
+        if (host) host.appendChild(createGarmentNode(garment, pair.isMatched));
+      }
+
+      spot.addEventListener("click", () => handleSpotClick(spot, pair, slotType));
+
+      return spot;
+    }
+
+    function createGarmentNode(garment, isLocked) {
+      const div = document.createElement("div");
+      div.className = `garment-item ${isLocked ? "locked" : ""}`;
+      div.dataset.instanceId = garment.instanceId;
+      div.dataset.type = garment.type;
+      div.dataset.designId = garment.designId;
+
+      const isSelected = gameState.selectedGarment && gameState.selectedGarment.instanceId === garment.instanceId;
+      if (isSelected) div.classList.add("selected");
+
+      const img = document.createElement("img");
+      img.src = garment.url;
+      img.alt = `${garment.name} ${garment.type}`;
+      img.draggable = false;
+      div.appendChild(img);
+
+      if (!isLocked) {
+        div.addEventListener("pointerdown", handleGarmentPointerDown);
+        div.addEventListener("click", (e) => {
+          e.stopPropagation();
+          handleGarmentSelect(garment);
+        });
+      }
+
+      return div;
+    }
+
+    let dragData = null;
+
+    function handleGarmentPointerDown(e) {
+      if (e.button !== undefined && e.button !== 0) return;
+      const card = e.currentTarget;
+      if (card.classList.contains("locked")) return;
+
+      const instanceId = card.dataset.instanceId;
+      const garment = gameState.activeRound.garments.find(g => g.instanceId === instanceId);
+      if (!garment) return;
+
+      e.preventDefault();
+      playTone("pop");
+
+      const proxy = document.getElementById("drag-proxy");
+      if (proxy) {
+        proxy.innerHTML = `<img src="${garment.url}" alt="Garment">`;
+        proxy.style.display = "block";
+        proxy.style.left = `${e.clientX}px`;
+        proxy.style.top = `${e.clientY}px`;
+      }
+
+      card.classList.add("dragging");
+
+      dragData = {
+        pointerId: e.pointerId,
+        garment: garment,
+        sourceElement: card
+      };
+
+      window.addEventListener("pointermove", handlePointerMove, { passive: false });
+      window.addEventListener("pointerup", handlePointerUp);
+      window.addEventListener("pointercancel", handlePointerCancel);
+    }
+
+    function handlePointerMove(e) {
+      if (!dragData || e.pointerId !== dragData.pointerId) return;
+      e.preventDefault();
+
+      const proxy = document.getElementById("drag-proxy");
+      if (proxy) {
+        proxy.style.left = `${e.clientX}px`;
+        proxy.style.top = `${e.clientY}px`;
+      }
+
+      document.querySelectorAll(".hanging-spot").forEach(s => s.classList.remove("hover-target"));
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      if (target) {
+        const spot = target.closest(".hanging-spot");
+        if (spot && spot.dataset.slotType === dragData.garment.type) {
+          const pairIndex = parseInt(spot.dataset.pairIndex, 10);
+          const pair = gameState.activeRound.pairs[pairIndex];
+          if (pair && !pair.isMatched) {
+            spot.classList.add("hover-target");
+          }
+        }
+      }
+    }
+
+    function handlePointerUp(e) {
+      if (!dragData || e.pointerId !== dragData.pointerId) return;
+
+      const proxy = document.getElementById("drag-proxy");
+      if (proxy) {
+        proxy.style.display = "none";
+        proxy.innerHTML = "";
+      }
+
+      if (dragData.sourceElement) {
+        dragData.sourceElement.classList.remove("dragging");
+      }
+
+      const targetEl = document.elementFromPoint(e.clientX, e.clientY);
+      const targetSpot = targetEl ? targetEl.closest(".hanging-spot") : null;
+
+      if (targetSpot) {
+        attemptPlaceGarment(dragData.garment, targetSpot);
+      } else {
+        renderBoard();
+      }
+
+      cleanDragListeners();
+    }
+
+    function handlePointerCancel(e) {
+      if (!dragData) return;
+      const proxy = document.getElementById("drag-proxy");
+      if (proxy) proxy.style.display = "none";
+      if (dragData.sourceElement) dragData.sourceElement.classList.remove("dragging");
+      cleanDragListeners();
+      renderBoard();
+    }
+
+    function cleanDragListeners() {
+      document.querySelectorAll(".hanging-spot").forEach(s => s.classList.remove("hover-target"));
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerCancel);
+      dragData = null;
+    }
+
+    function handleGarmentSelect(garment) {
+      if (gameState.selectedGarment && gameState.selectedGarment.instanceId === garment.instanceId) {
+        gameState.selectedGarment = null;
+      } else {
+        gameState.selectedGarment = garment;
+        playTone("pop");
+      }
+      renderBoard();
+    }
+
+    function handleSpotClick(spot, pair, slotType) {
+      if (gameState.selectedGarment) {
+        attemptPlaceGarment(gameState.selectedGarment, spot);
+        gameState.selectedGarment = null;
+        return;
+      }
+
+      if (!pair.isMatched) {
+        const garmentInSpot = slotType === "shirt" ? pair.shirt : pair.trousers;
+        if (garmentInSpot) {
+          playTone("pop");
+          garmentInSpot.placedPairIndex = null;
+          garmentInSpot.placedSlot = null;
+          if (slotType === "shirt") pair.shirt = null;
+          else pair.trousers = null;
+          renderBoard();
+        }
+      }
+    }
+
+    function attemptPlaceGarment(garment, spotEl) {
+      const slotType = spotEl.dataset.slotType;
+      const pairIndex = parseInt(spotEl.dataset.pairIndex, 10);
+      const round = gameState.activeRound;
+      const pair = round.pairs[pairIndex];
+
+      if (garment.type !== slotType || pair.isMatched) {
+        renderBoard();
+        return;
+      }
+
+      if (garment.placedPairIndex !== null) {
+        const prevPair = round.pairs[garment.placedPairIndex];
+        if (prevPair) {
+          if (garment.type === "shirt" && prevPair.shirt?.instanceId === garment.instanceId) {
+            prevPair.shirt = null;
+          } else if (garment.type === "trousers" && prevPair.trousers?.instanceId === garment.instanceId) {
+            prevPair.trousers = null;
+          }
+        }
+      }
+
+      const currentOccupant = slotType === "shirt" ? pair.shirt : pair.trousers;
+      if (currentOccupant && currentOccupant.instanceId !== garment.instanceId) {
+        currentOccupant.placedPairIndex = null;
+        currentOccupant.placedSlot = null;
+      }
+
+      if (slotType === "shirt") {
+        pair.shirt = garment;
+      } else {
+        pair.trousers = garment;
+      }
+      garment.placedPairIndex = pairIndex;
+      garment.placedSlot = slotType;
+
+      playTone("pop");
+
+      evaluatePair(pair);
+      renderBoard();
+    }
+
+    function evaluatePair(pair) {
+      const t = I18N[gameState.lang] || I18N.bm;
+      const feedback = document.getElementById("live-feedback");
+      const feedbackText = document.getElementById("txt-live-feedback");
+
+      if (pair.shirt && pair.trousers) {
+        if (pair.shirt.designId === pair.trousers.designId) {
+          pair.isMatched = true;
+          playTone("match");
+
+          if (feedback) feedback.className = "feedback-bubble show";
+          if (feedbackText) feedbackText.textContent = t.feedbackMatch;
+
+          setTimeout(() => {
+            if (feedback) feedback.classList.remove("show");
+          }, 2000);
+
+          checkWin();
+        } else {
+          playTone("mismatch");
+          if (feedback) feedback.className = "feedback-bubble show notice";
+          if (feedbackText) feedbackText.textContent = t.feedbackMismatch;
+
+          setTimeout(() => {
+            if (!pair.isMatched && pair.trousers) {
+              pair.trousers.placedPairIndex = null;
+              pair.trousers.placedSlot = null;
+              pair.trousers = null;
+              renderBoard();
+            }
+            if (feedback) feedback.classList.remove("show");
+          }, 1200);
+        }
+      }
+    }
+
+    function checkWin() {
+      const round = gameState.activeRound;
+      const allDone = round.pairs.every(p => p.isMatched);
+
+      if (allDone) {
+        round.isFinished = true;
+        gameState.totalPairsCompleted += round.pairCount;
+
+        setTimeout(() => {
+          playTone("victory");
+          startConfetti();
+
+          if (gameState.currentRoundNumber < gameState.totalRounds) {
+            renderLocalization();
+            const modal = document.getElementById("modal-round-win");
+            if (modal) modal.classList.add("active");
+          } else {
+            safeSetText("val-stat-rounds", `${gameState.totalRounds} / ${gameState.totalRounds}`);
+            safeSetText("val-stat-pairs", `${gameState.totalPairsCompleted} Pasangan`);
+            renderLocalization();
+            const scoreModal = document.getElementById("modal-final-scoreboard");
+            if (scoreModal) scoreModal.classList.add("active");
+          }
+        }, 500);
+      }
+    }
+
+    function startConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#F43F5E", "#FB7185", "#FBBF24", "#F59E0B", "#8B5CF6", "#EC4899"];
+
+      for (let i = 0; i < 85; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 13,
+          vy: (Math.random() - 0.7) * 15,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vr: (Math.random() - 0.5) * 8,
+          alpha: 1
+        });
+      }
+
+      let frame = 0;
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let anyAlive = false;
+
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35;
+          p.rotation += p.vr;
+          p.alpha -= 0.012;
+
+          if (p.alpha > 0) {
+            anyAlive = true;
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+          }
+        });
+
+        frame++;
+        if (anyAlive && frame < 120) {
+          requestAnimationFrame(loop);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+
+    function init() {
+      loadState();
+      renderLocalization();
+
+      const langBtn = document.getElementById("btn-lang-toggle");
+      if (langBtn) {
+        langBtn.addEventListener("click", () => {
+          gameState.lang = gameState.lang === "bm" ? "en" : "bm";
+          saveState();
+          renderLocalization();
+          renderBoard();
+        });
+      }
+
+      const soundBtn = document.getElementById("btn-sound-toggle");
+      const iconOn = document.getElementById("svg-sound-on");
+      const iconOff = document.getElementById("svg-sound-off");
+
+      function updateSoundUI() {
+        if (!iconOn || !iconOff) return;
+        if (gameState.soundEnabled) {
+          iconOn.style.display = "block";
+          iconOff.style.display = "none";
+        } else {
+          iconOn.style.display = "none";
+          iconOff.style.display = "block";
+        }
+      }
+      updateSoundUI();
+
+      if (soundBtn) {
+        soundBtn.addEventListener("click", () => {
+          gameState.soundEnabled = !gameState.soundEnabled;
+          updateSoundUI();
+          saveState();
+          if (gameState.soundEnabled) playTone("pop");
+        });
+      }
+
+      document.querySelectorAll(".diff-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".diff-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          gameState.difficulty = btn.dataset.diff;
+          saveState();
+          playTone("pop");
+          renderLocalization();
+        });
+      });
+
+      const startBtn = document.getElementById("btn-start");
+      if (startBtn) {
+        startBtn.addEventListener("click", () => {
+          playTone("pop");
+          gameState.currentRoundNumber = 1;
+          gameState.totalPairsCompleted = 0;
+          gameState.activeRound = createRound(gameState.difficulty);
+          renderLocalization();
+          renderBoard();
+          switchScreen("screen-game");
+        });
+      }
+
+      const goHome = () => {
+        playTone("pop");
+        gameState.selectedGarment = null;
+        const roundModal = document.getElementById("modal-round-win");
+        const scoreModal = document.getElementById("modal-final-scoreboard");
+        if (roundModal) roundModal.classList.remove("active");
+        if (scoreModal) scoreModal.classList.remove("active");
+        switchScreen("screen-menu");
+      };
+
+      const homeBtn = document.getElementById("btn-header-home");
+      const backBtn = document.getElementById("btn-header-back");
+      const backInlineBtn = document.getElementById("btn-back-inline");
+
+      if (homeBtn) homeBtn.addEventListener("click", goHome);
+      if (backBtn) backBtn.addEventListener("click", goHome);
+      if (backInlineBtn) backInlineBtn.addEventListener("click", goHome);
+
+      const roundNextBtn = document.getElementById("btn-round-next");
+      if (roundNextBtn) {
+        roundNextBtn.addEventListener("click", () => {
+          playTone("pop");
+          const roundModal = document.getElementById("modal-round-win");
+          if (roundModal) roundModal.classList.remove("active");
+          gameState.currentRoundNumber++;
+          gameState.activeRound = createRound(gameState.difficulty);
+          renderLocalization();
+          renderBoard();
+        });
+      }
+
+      const replayBtn = document.getElementById("btn-scoreboard-replay");
+      if (replayBtn) {
+        replayBtn.addEventListener("click", () => {
+          playTone("pop");
+          const scoreModal = document.getElementById("modal-final-scoreboard");
+          if (scoreModal) scoreModal.classList.remove("active");
+          gameState.currentRoundNumber = 1;
+          gameState.totalPairsCompleted = 0;
+          gameState.activeRound = createRound(gameState.difficulty);
+          renderLocalization();
+          renderBoard();
+        });
+      }
+
+      const scoreHomeBtn = document.getElementById("btn-scoreboard-home");
+      if (scoreHomeBtn) scoreHomeBtn.addEventListener("click", goHome);
+
+      window.addEventListener("resize", () => {
+        if (gameState.activeRound) renderBoard();
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
